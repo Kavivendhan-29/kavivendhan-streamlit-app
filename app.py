@@ -27,7 +27,8 @@ if st.button("Click me"):
     quote = random.choice(quotes)
     st.markdown(
         f"""
-        <div style="background-color:yellow; padding:15px; border-radius:10px; font-size:16px;">
+        <div style="background-color:white; color:black; padding:15px; 
+                    border-radius:10px; font-size:16px; border:1px solid black;">
             {quote}
         </div>
         """,
