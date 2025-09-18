@@ -1,69 +1,36 @@
 # app.py
 import streamlit as st
-import base64
-import os
+import random
 
-st.set_page_config(page_title="Kavivendhan App", layout="wide")
+# ------------------------------
+# Page Config
+# ------------------------------
+st.set_page_config(page_title="Kavivendhan App", layout="centered")
 
-def add_bg_from_local(image_file):
-    """Embed local image as CSS background via base64."""
-    if not os.path.exists(image_file):
-        return False
-    with open(image_file, "rb") as f:
-        data = f.read()
-    encoded = base64.b64encode(data).decode()
-    css = f"""
-    <style>
-    .stApp {{
-      background-image: url("data:image/jpg;base64,{encoded}");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }}
-    /* Optional: make header/footer transparent/small */
-    header {{background: rgba(0,0,0,0);}}
-    footer {{visibility: hidden;}}
-    </style>
-    """
-    st.markdown(css, unsafe_allow_html=True)
-    return True
+# ------------------------------
+# Title & Intro
+# ------------------------------
+st.title("Hey!! This is Kavivendhan V S")
+st.write("🚀 I'm a dreamer, explorer, and someone who loves tech & anime. Always learning, always building cool stuff!")
 
-# Path to image (put your image at assets/bg.jpg)
-IMG_PATH = "bg.jpg"
-ok = add_bg_from_local(IMG_PATH)
-if not ok:
-    st.warning("Background image not found at 'assets/bg.jpg'. Upload it or change IMG_PATH.")
+# ------------------------------
+# Button + Quotes
+# ------------------------------
+quotes = [
+    "🌊 “Inherited Will, the swelling of the changing times, and the dreams of people — these are things that cannot be stopped.” — Gol D. Roger",
+    "☠️ “When do you think people die? When they are shot with a bullet? No! ... It’s when they are forgotten!” — Dr. Hiluluk",
+    "🔥 “I don’t want to conquer anything. I just think the guy with the most freedom in this whole ocean… is the Pirate King!” — Monkey D. Luffy",
+    "⚔️ “I don’t care what the society says. I’ve never regretted doing anything. I will survive and do what I want to.” — Roronoa Zoro",
+]
 
-# Page content
-st.markdown(
-    "<h1 style='text-align:center; color: white; text-shadow: 0 0 12px rgba(0,0,0,0.9);'>Hey!!! This is Kavivendhan</h1>",
-    unsafe_allow_html=True
-)
+if st.button("Click me"):
+    quote = random.choice(quotes)
+    st.markdown(
+        f"""
+        <div style="background-color:yellow; padding:15px; border-radius:10px; font-size:16px;">
+            {quote}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-st.markdown("<h3 style='text-align:center; color:#ffd580;'>🤖 Dreamer | Explorer | Builder of AI & Data Stories</h3>", unsafe_allow_html=True)
-
-# Add a two-column interactive section
-col1, col2 = st.columns([1, 2])
-
-with col1:
-    st.image(IMG_PATH, caption="Background preview", use_column_width=True)
-    if st.button("Inspire me ✨"):
-        st.balloons()
-        st.success("Keep going — your projects matter!")
-
-with col2:
-    st.subheader("Quick links & widgets")
-    st.write("- Upload dataset, run EDA, and preview outputs.")
-    file = st.file_uploader("Upload CSV (optional)", type=["csv"])
-    if file:
-        import pandas as pd
-        df = pd.read_csv(file)
-        st.write("Preview:")
-        st.dataframe(df.head())
-        st.write("Shape:", df.shape)
-        if st.checkbox("Show descriptive stats"):
-            st.write(df.describe())
-
-# Footer / Quote
-st.markdown("---")
-st.info("“The best way to predict the future is to create it.” — Start building today.")
